@@ -78,3 +78,22 @@ FluentValidation
 Swagger UI
 
 xUnit + Moq + FluentAssertions
+
+
+## 🧠 Things I would have liked to implement with more time
+
+While the core requirements were implemented following Clean Architecture and TDD, there are several improvements I would have liked to apply if I had more time:
+
+### ✅ Functional error handling with the Result pattern
+Instead of relying on exceptions for control flow, I would have implemented a `Result<T>` or `OneOf<TSuccess, TError>` pattern to return success/failure explicitly across application and domain layers. This improves testability, composability, and clarity of intent.
+
+Example:
+
+```csharp
+Result<Person> Register(CreatePersonCommand command);
+
+### ✅ Centralized error handling middleware
+
+### ✅ CQRS with MediatR or vertical slice architecture
+
+### ✅  Unit test coverage on controller and integration boundaries
