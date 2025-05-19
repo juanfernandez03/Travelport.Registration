@@ -4,6 +4,7 @@ using Travelport.Application.DTOs;
 using Travelport.Application.Interfaces;
 using Travelport.Application.Services;
 using Travelport.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Travelport.Tests.Services;
 
@@ -14,6 +15,7 @@ public class PersonServiceTests
     {
         // Arrange
         var mockRepo = new Mock<IPersonRepository>();
+        var mockLogger = new Mock<ILogger<PersonService>>(); // Mock the ILogger
         var command = new CreatePersonCommand
         {
             Name = "Carlos",
@@ -27,7 +29,7 @@ public class PersonServiceTests
         mockRepo.Setup(r => r.AddAsync(It.IsAny<Person>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Person p, CancellationToken _) => p);
 
-        var service = new PersonService(mockRepo.Object);
+        var service = new PersonService(mockRepo.Object, mockLogger.Object); // Pass the mockLogger
 
         // Act
         var result = await service.RegisterAsync(command);
@@ -35,7 +37,7 @@ public class PersonServiceTests
         // Assert
         result.Should().NotBeNull();
         result.Name.Should().Be(command.Name);
-        result.PassportNumber.Should().Be(command.PassportNumber);
+        result.PassportNumber.ToString().Should().Be("PA1234567");
         mockRepo.Verify(r => r.AddAsync(It.IsAny<Person>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }
