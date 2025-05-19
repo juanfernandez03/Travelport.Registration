@@ -14,14 +14,14 @@ public class PersonRepository : IPersonRepository
         _context = context;
     }
 
-    public async Task<Person> AddAsync(Person person)
+    public async Task<Person> AddAsync(Person person, CancellationToken cancellationToken)
     {
         _context.People.Add(person);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
         return person;
     }
 
-    public async Task<List<Person>> GetAllAsync()
+    public async Task<IReadOnlyList<Person>> GetAllAsync()
     {
         return await _context.People.ToListAsync();
     }

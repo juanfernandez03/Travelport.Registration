@@ -24,8 +24,8 @@ public class PersonServiceTests
             AirportCode = "MAD"
         };
 
-        mockRepo.Setup(r => r.AddAsync(It.IsAny<Person>()))
-                .ReturnsAsync((Person p) => p);
+        mockRepo.Setup(r => r.AddAsync(It.IsAny<Person>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Person p, CancellationToken _) => p);
 
         var service = new PersonService(mockRepo.Object);
 
@@ -36,6 +36,6 @@ public class PersonServiceTests
         result.Should().NotBeNull();
         result.Name.Should().Be(command.Name);
         result.PassportNumber.Should().Be(command.PassportNumber);
-        mockRepo.Verify(r => r.AddAsync(It.IsAny<Person>()), Times.Once);
+        mockRepo.Verify(r => r.AddAsync(It.IsAny<Person>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

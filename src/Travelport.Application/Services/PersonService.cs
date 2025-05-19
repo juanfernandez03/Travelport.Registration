@@ -13,7 +13,7 @@ public class PersonService
         _repository = repository;
     }
 
-    public async Task<Person> RegisterAsync(CreatePersonCommand command)
+    public async Task<Person> RegisterAsync(CreatePersonCommand command,CancellationToken cancellationToken = default)
     {
         var person = new Person(
             command.Name,
@@ -23,7 +23,7 @@ public class PersonService
             command.Phone,
             command.AirportCode);
 
-        return await _repository.AddAsync(person);
+        return await _repository.AddAsync(person,cancellationToken);
     }
 
     public async Task<Person?> GetByIdAsync(Guid id)

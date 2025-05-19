@@ -17,14 +17,14 @@ public class PeopleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterAsync([FromBody] CreatePersonCommand command)
+    public async Task<IActionResult> RegisterAsync([FromBody] CreatePersonCommand command,CancellationToken cancellationToken)
     {
         var validator = new CreatePersonValidator();
         var validation = validator.Validate(command);
         if (!validation.IsValid)
             return BadRequest(validation.Errors);
 
-        var person = await _service.RegisterAsync(command);
+        var person = await _service.RegisterAsync(command, cancellationToken);
         return CreatedAtAction(nameof(GetByIdAsync), new { id = person.Id }, person);
     }
 
