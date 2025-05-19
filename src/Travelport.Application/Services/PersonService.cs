@@ -25,4 +25,10 @@ public class PersonService
 
         return await _repository.AddAsync(person);
     }
+
+    public async Task<Person?> GetByIdAsync(Guid id)
+    {
+        return await _repository.GetByIdAsync(id);
+    }
+
 }
