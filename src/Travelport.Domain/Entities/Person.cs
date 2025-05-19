@@ -1,4 +1,6 @@
-﻿namespace Travelport.Domain.Entities;
+﻿using Travelport.Domain.ValueObjects;
+
+namespace Travelport.Domain.Entities;
 
 public class Person
 {
@@ -6,7 +8,7 @@ public class Person
     public string Name { get; private set; }
     public string Surname { get; private set; }
     public string Email { get; private set; }
-    public string PassportNumber { get; private set; }
+    public PassportNumber PassportNumber { get; private set; }
     public string Phone { get; private set; }
     public string AirportCode { get; private set; }
 
@@ -18,7 +20,7 @@ public class Person
         Name = name;
         Surname = surname;
         Email = email;
-        PassportNumber = passportNumber;
+        PassportNumber = PassportNumber.Create(passportNumber); 
         Phone = phone;
         AirportCode = airportCode;
 
@@ -29,7 +31,7 @@ public class Person
         Name = name;
         Surname = surname;
         Email = email;
-        PassportNumber = passportNumber;
+        PassportNumber = PassportNumber.Create(passportNumber);
         Phone = phone;
         AirportCode = airportCode;
     }

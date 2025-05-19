@@ -17,7 +17,7 @@ public class PeopleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] CreatePersonCommand command)
+    public async Task<IActionResult> RegisterAsync([FromBody] CreatePersonCommand command)
     {
         var validator = new CreatePersonValidator();
         var validation = validator.Validate(command);
@@ -25,11 +25,11 @@ public class PeopleController : ControllerBase
             return BadRequest(validation.Errors);
 
         var person = await _service.RegisterAsync(command);
-        return CreatedAtAction(nameof(GetById), new { id = person.Id }, person);
+        return CreatedAtAction(nameof(GetByIdAsync), new { id = person.Id }, person);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         var person = await _service.GetByIdAsync(id);
         return person is null ? NotFound() : Ok(person);
